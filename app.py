@@ -5,9 +5,16 @@ app = Flask(__name__)
 
 import sys
 
-
-
-
+@app.get('/api/blog_posting')
+def get_post():
+    post_list= run_query("SELECT * FROM blog_posts")
+    resp = []
+    for post in post_list:
+        post_obj= {}
+        post_obj["postId"] = post[0]
+        post_obj["postText"] = post[1]
+        resp.append(post_obj)
+    return jsonify(post_list), 200
 
 
 

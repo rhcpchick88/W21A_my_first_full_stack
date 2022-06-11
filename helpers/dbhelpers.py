@@ -31,7 +31,6 @@ def run_query(statement, args=None):
         if statement.startswith("SELECT"):
             cursor.execute(statement, args)
             result = cursor.fetchall()
-            print("Total of {} users".format(cursor.rowcount))
             return result
         else:
             cursor.execute(statement,args)
