@@ -16,8 +16,24 @@ def get_post():
         resp.append(post_obj)
     return jsonify(post_list), 200
 
+@app.post('/api/blog_posting')
+def blog_post():
+    data = request.json
+    post_text=data.get("postText")
+    if not post_text:
+        return jsonify("Missing required argument 'postText'"), 422
+    run_query("INSERT INTO blog_posts (text) VALUES (?)", [post_text])
+    return jsonify("Blog post added"), 201
 
-
+@app.post('/api/blog_posting')
+def blog_delete():
+    data=request.json
+    post_id=data.get("postId")
+    if not post_id:
+        return jsonify("Missing required argument postId"),422
+    run_query("DELETE FROM blog_posts WHERE id = ?)", [post_id])
+    return jsonify("Post successfully deleted"), 201
+    
 
 
 if (len(sys.argv)>1):
